@@ -2,21 +2,18 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 
-// Define a porta para o servidor ou usa a porta fornecida pelo Glitch
 const port = process.env.PORT || 3000;
 
-// Carrega os dados do arquivo JSON
 const carrosData = JSON.parse(fs.readFileSync('carrosbrasil.json', 'utf-8'));
 
-// Endpoint para consultar carros
 app.get('/consultarCarro', (req, res) => {
-    const input = req.query.input.toLowerCase().replace(/[^a-zA-Z0-9\s]/gi, ''); // Normaliza o input removendo caracteres especiais
-    const palavras = input.split(/\s+/); // Divide o input em palavras separadas
+    const input = req.query.input.toLowerCase().replace(/[^a-zA-Z0-9\s]/gi, ''); 
+    const palavras = input.split(/\s+/); 
 
     let marcaEncontrada = false;
     let modeloEncontrado = false;
 
-    // Verifica se alguma palavra corresponde a uma marca válida
+    
     for (let palavra of palavras) {
         const carro = carrosData.find(carro => carro.marca.toLowerCase() === palavra);
         if (carro) {
@@ -25,7 +22,7 @@ app.get('/consultarCarro', (req, res) => {
         }
     }
 
-    // Se uma marca válida foi encontrada, verifica se alguma palavra corresponde a um modelo válido
+    
     if (marcaEncontrada) {
         for (let palavra of palavras) {
             const carro = carrosData.find(carro => carro.modelo.toLowerCase() === palavra);
@@ -36,7 +33,7 @@ app.get('/consultarCarro', (req, res) => {
         }
     }
 
-    // Retorna a resposta adequada
+    
     if (marcaEncontrada && modeloEncontrado) {
         res.json({ mensagem: 'Marca e modelo do carro validados.' });
     } else {
@@ -44,7 +41,7 @@ app.get('/consultarCarro', (req, res) => {
     }
 });
 
-// Inicia o servidor
+
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
 });
