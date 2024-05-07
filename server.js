@@ -9,12 +9,13 @@ app.use((req, res, next) => {
 
 const port = process.env.PORT || 3000;
 
+
 let carrosData;
 try {
   carrosData = JSON.parse(fs.readFileSync("carrosbrasil.json", "utf-8"));
 } catch (error) {}
 
-// console.log("Modelos armazenados no mapa:", carrosData);
+
 
 app.post("/consultarCarro", (req, res) => {
   console.log("Recebida solicitação para consultar carro.");
@@ -40,20 +41,9 @@ app.post("/consultarCarro", (req, res) => {
       if (pal == item.modelo) {
         modeloEncontrado = true;
       }
+
     }
   }
-
-  // for (let palavra of palavras) {
-  //   const modelos = marcasMap.get(palavra);
-  //   console.log("Modelos encontrados para", palavra, ":", modelos);
-  //   if (modelos) {
-  //     marcaEncontrada = true;
-  //     if (modelos.has(palavra)) {
-  //       modeloEncontrado = true;
-  //       break;
-  //     }
-  //   }
-  // }
 
   console.log("Marca encontrada:", marcaEncontrada);
   console.log("Modelo encontrado:", modeloEncontrado);
