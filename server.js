@@ -9,10 +9,12 @@ app.use((req, res, next) => {
 
 const port = process.env.PORT || 3000;
 
+
 let carrosData;
 try {
   carrosData = JSON.parse(fs.readFileSync("carrosbrasil.json", "utf-8"));
 } catch (error) {}
+
 
 
 app.post("/consultarCarro", (req, res) => {
@@ -39,6 +41,7 @@ app.post("/consultarCarro", (req, res) => {
       if (pal == item.modelo) {
         modeloEncontrado = true;
       }
+
     }
   }
 
